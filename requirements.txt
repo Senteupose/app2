@@ -1,4 +1,5 @@
 streamlit
+streamlit-extras
 groq
 pytesseract
 requests
