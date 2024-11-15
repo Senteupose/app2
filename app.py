@@ -6,18 +6,23 @@ from PIL import Image
 import io
 import fitz  # PyMuPDF
 import time
-from streamlit_extras.switch_page_button import switch_page
 
-# Add navigation buttons at the top
-col1, col2 = st.columns([1, 1])
 
-with col1:
-    if st.button("Register"):
-        switch_page("register")
+# Set the page state
+if "page" not in st.session_state:
+    st.session_state.page = "main"
 
-with col2:
-    if st.button("Login"):
-        switch_page("login")
+# Navigation logic
+if st.session_state.page == "main":
+    col1, col2 = st.columns([1, 1])
+
+    with col1:
+        if st.button("Register"):
+            st.session_state.page = "register"
+
+    with col2:
+        if st.button("Login"):
+            st.session_state.page = "login"
 # Initialize session state for storing inputs and responses
 if 'text_responses' not in st.session_state:
     st.session_state.text_responses = []
