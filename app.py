@@ -6,7 +6,7 @@ from PIL import Image
 import io
 import fitz  # PyMuPDF
 import time
-
+st.set_page_config(page_title="AI Smart Study Assistant", page_icon="📚", layout="wide")
 
 # Set the page state
 if "page" not in st.session_state:
@@ -85,7 +85,7 @@ def get_ai_response(input_text, topic_type):
         return None
 
 # Streamlit Configuration and Styling
-st.set_page_config(page_title="AI Smart Study Assistant", page_icon="📚", layout="wide")
+
 st.markdown("""
 <style>
     .stApp {
