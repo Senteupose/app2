@@ -5,3 +5,4 @@ pytesseract
 requests
 PyMuPDF
 speechrecognition
+sqlite3
