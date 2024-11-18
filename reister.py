@@ -3,7 +3,7 @@ import sqlite3
 
 # Database connection
 def create_connection():
-    conn = sqlite3.connect("app.db")  # Replace 'app.db' with your database file
+    conn = sqlite3.connect("https://sqlfiddle.com/sqlite/online-compiler?id=50cfbd42-4451-4517-a4e8-13fdeea5b29d")  # Replace 'app.db' with your database file
     return conn
 
 # Function to create users table if it doesn't exist
