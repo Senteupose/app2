@@ -34,7 +34,8 @@ if 'user_feedback' not in st.session_state:
     st.session_state.user_feedback = []
 
 # Constants and API Setup
-GROQ_API_KEY = "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"
+# GROQ_API_KEY = "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"
+GROQ_API_KEY = "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"
 client = Groq(api_key=GROQ_API_KEY)
 
 # Tesseract OCR Path (adjust for your environment)
