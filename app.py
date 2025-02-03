@@ -78,7 +78,7 @@ def get_ai_response(input_text, topic_type):
                 {"role": "user", "content": input_text},
                 {"role": "user", "content": "Can you recommend resources (books, videos, quizzes) related to this topic?"}
             ],
-            model="llama-3.1-70b-versatile",
+            model="llama-3.3-70b-versatile",
         )
         return chat_completion.choices[0].message.content.strip()
     except Exception as e:
