@@ -211,40 +211,73 @@ if "registration_form" not in st.session_state:
         "feedback_frequency": ""
     }
 
+# Initialize session state for registration form
+if "registration_form" not in st.session_state:
+    st.session_state.registration_form = {
+        "username": "",
+        "email": "",
+        "password": "",
+        "academic_level": "",
+        "field_of_study": "",
+        "interests": [],
+        "goal": "",
+        "programming_level": 5,
+        "math_level": 5,
+        "learning_style": "",
+        "feedback_frequency": ""
+    }
+
 # User Registration
 if st.session_state.page == "register":
     st.title("User Registration")
 
-    # Use st.session_state to preserve form data
-    st.session_state.registration_form["username"] = st.text_input("Username", value=st.session_state.registration_form["username"])
-    st.session_state.registration_form["email"] = st.text_input("Email", value=st.session_state.registration_form["email"])
-    st.session_state.registration_form["password"] = st.text_input("Password", type="password", value=st.session_state.registration_form["password"])
-    st.session_state.registration_form["academic_level"] = st.selectbox("Academic Level", ["Undergraduate", "Graduate", "Postgraduate", "PhD", "Other"], index=["Undergraduate", "Graduate", "Postgraduate", "PhD", "Other"].index(st.session_state.registration_form["academic_level"]) if st.session_state.registration_form["academic_level"] else 0)
-    st.session_state.registration_form["field_of_study"] = st.selectbox("Field of Study", ["Computer Science", "Engineering", "Medicine", "Business Administration", "Arts and Humanities", "Law", "Natural Sciences", "Other"], index=["Computer Science", "Engineering", "Medicine", "Business Administration", "Arts and Humanities", "Law", "Natural Sciences", "Other"].index(st.session_state.registration_form["field_of_study"]) if st.session_state.registration_form["field_of_study"] else 0)
-    st.session_state.registration_form["interests"] = st.multiselect("Areas of Interest", ["Machine Learning & AI", "Statistics", "Programming & Development", "Computer Networks", "Research Methods", "Data Science", "Exam Preparation", "Other"], default=st.session_state.registration_form["interests"])
-    st.session_state.registration_form["goal"] = st.selectbox("Primary Goal", ["Improve academic performance", "Prepare for exams", "Enhance understanding of specific topics", "Research assistance", "Career preparation", "Other"], index=["Improve academic performance", "Prepare for exams", "Enhance understanding of specific topics", "Research assistance", "Career preparation", "Other"].index(st.session_state.registration_form["goal"]) if st.session_state.registration_form["goal"] else 0)
-    st.session_state.registration_form["programming_level"] = st.slider("Programming Skill (1: Beginner → 10: Expert)", 1, 10, st.session_state.registration_form["programming_level"])
-    st.session_state.registration_form["math_level"] = st.slider("Math/Statistics Skill (1 → 10)", 1, 10, st.session_state.registration_form["math_level"])
-    st.session_state.registration_form["learning_style"] = st.radio("Preferred Learning Style", ["Visual (videos, images)", "Text-based (articles, books)", "Hands-on (projects, coding exercises)", "Mixed"], index=["Visual (videos, images)", "Text-based (articles, books)", "Hands-on (projects, coding exercises)", "Mixed"].index(st.session_state.registration_form["learning_style"]) if st.session_state.registration_form["learning_style"] else 0)
-    st.session_state.registration_form["feedback_frequency"] = st.radio("Feedback Frequency", ["Weekly progress reports", "Monthly updates", "No feedback needed"], index=["Weekly progress reports", "Monthly updates", "No feedback needed"].index(st.session_state.registration_form["feedback_frequency"]) if st.session_state.registration_form["feedback_frequency"] else 0)
+    # Use st.form to group the registration fields
+    with st.form("registration_form"):
+        st.session_state.registration_form["username"] = st.text_input("Username", value=st.session_state.registration_form["username"])
+        st.session_state.registration_form["email"] = st.text_input("Email", value=st.session_state.registration_form["email"])
+        st.session_state.registration_form["password"] = st.text_input("Password", type="password", value=st.session_state.registration_form["password"])
+        st.session_state.registration_form["academic_level"] = st.selectbox("Academic Level", ["Undergraduate", "Graduate", "Postgraduate", "PhD", "Other"], index=["Undergraduate", "Graduate", "Postgraduate", "PhD", "Other"].index(st.session_state.registration_form["academic_level"]) if st.session_state.registration_form["academic_level"] else 0)
+        st.session_state.registration_form["field_of_study"] = st.selectbox("Field of Study", ["Computer Science", "Engineering", "Medicine", "Business Administration", "Arts and Humanities", "Law", "Natural Sciences", "Other"], index=["Computer Science", "Engineering", "Medicine", "Business Administration", "Arts and Humanities", "Law", "Natural Sciences", "Other"].index(st.session_state.registration_form["field_of_study"]) if st.session_state.registration_form["field_of_study"] else 0)
+        st.session_state.registration_form["interests"] = st.multiselect("Areas of Interest", ["Machine Learning & AI", "Statistics", "Programming & Development", "Computer Networks", "Research Methods", "Data Science", "Exam Preparation", "Other"], default=st.session_state.registration_form["interests"])
+        st.session_state.registration_form["goal"] = st.selectbox("Primary Goal", ["Improve academic performance", "Prepare for exams", "Enhance understanding of specific topics", "Research assistance", "Career preparation", "Other"], index=["Improve academic performance", "Prepare for exams", "Enhance understanding of specific topics", "Research assistance", "Career preparation", "Other"].index(st.session_state.registration_form["goal"]) if st.session_state.registration_form["goal"] else 0)
+        st.session_state.registration_form["programming_level"] = st.slider("Programming Skill (1: Beginner → 10: Expert)", 1, 10, st.session_state.registration_form["programming_level"])
+        st.session_state.registration_form["math_level"] = st.slider("Math/Statistics Skill (1 → 10)", 1, 10, st.session_state.registration_form["math_level"])
+        st.session_state.registration_form["learning_style"] = st.radio("Preferred Learning Style", ["Visual (videos, images)", "Text-based (articles, books)", "Hands-on (projects, coding exercises)", "Mixed"], index=["Visual (videos, images)", "Text-based (articles, books)", "Hands-on (projects, coding exercises)", "Mixed"].index(st.session_state.registration_form["learning_style"]) if st.session_state.registration_form["learning_style"] else 0)
+        st.session_state.registration_form["feedback_frequency"] = st.radio("Feedback Frequency", ["Weekly progress reports", "Monthly updates", "No feedback needed"], index=["Weekly progress reports", "Monthly updates", "No feedback needed"].index(st.session_state.registration_form["feedback_frequency"]) if st.session_state.registration_form["feedback_frequency"] else 0)
 
-    if st.button("Register", key="register_button"):
-        # Add user to the database
-        add_user(
-            st.session_state.registration_form["username"],
-            st.session_state.registration_form["email"],
-            st.session_state.registration_form["password"],
-            st.session_state.registration_form["academic_level"],
-            st.session_state.registration_form["field_of_study"],
-            st.session_state.registration_form["interests"],
-            st.session_state.registration_form["goal"],
-            st.session_state.registration_form["programming_level"],
-            st.session_state.registration_form["math_level"],
-            st.session_state.registration_form["learning_style"],
-            st.session_state.registration_form["feedback_frequency"]
-        )
-        st.success("User registered successfully!")
-        st.session_state.page = "main"
+        # Submit button
+        if st.form_submit_button("Register"):
+            # Add user to the database
+            add_user(
+                st.session_state.registration_form["username"],
+                st.session_state.registration_form["email"],
+                st.session_state.registration_form["password"],
+                st.session_state.registration_form["academic_level"],
+                st.session_state.registration_form["field_of_study"],
+                st.session_state.registration_form["interests"],
+                st.session_state.registration_form["goal"],
+                st.session_state.registration_form["programming_level"],
+                st.session_state.registration_form["math_level"],
+                st.session_state.registration_form["learning_style"],
+                st.session_state.registration_form["feedback_frequency"]
+            )
+            st.success("User registered successfully!")
+            st.session_state.page = "main"
+
+            # Clear the registration form data after successful registration
+            st.session_state.registration_form = {
+                "username": "",
+                "email": "",
+                "password": "",
+                "academic_level": "",
+                "field_of_study": "",
+                "interests": [],
+                "goal": "",
+                "programming_level": 5,
+                "math_level": 5,
+                "learning_style": "",
+                "feedback_frequency": ""
+            }
 
         # Clear the registration form data after successful registration
         st.session_state.registration_form = {
