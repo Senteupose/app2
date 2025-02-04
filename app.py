@@ -12,14 +12,27 @@ st.set_page_config(page_title="AI Smart Study Assistant", page_icon="📚", layo
 if "page" not in st.session_state:
     st.session_state.page = "main"
 
-# Navigation logic
-if st.session_state.page == "main":
-    col1, col2 = st.columns([1, 1])
+# Sidebar for Navigation
+with st.sidebar:
+    st.title("Navigation")
+    page = st.radio("Go to", ["Home", "Study Assistant", "Profile", "Feedback"])
 
+    if page == "Home":
+        st.session_state.page = "main"
+    elif page == "Profile":
+        st.session_state.page = "profile"
+    elif page == "Feedback":
+        st.session_state.page = "feedback"
+
+# Main Page Logic
+if st.session_state.page == "main":
+    st.title("Welcome to the Smart Study Assistant!")
+    st.write("Your personalized study companion.")
+
+    col1, col2 = st.columns([1, 1])
     with col1:
         if st.button("Register"):
             st.session_state.page = "register"
-
     with col2:
         if st.button("Login"):
             st.session_state.page = "login"
