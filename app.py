@@ -150,55 +150,39 @@ st.markdown("<h1 class='main-header'>AI Smart Study Assistant</h1>", unsafe_allo
 st.markdown("<h2 class='sub-header'>Personalized Study Guidance at Your Fingertips</h2>", unsafe_allow_html=True)
 
 
-# Step 1: Basic Details
-st.header("User Profile Setup")
-name = st.text_input("Full Name")
-age = st.number_input("Age (Optional)", min_value=0, step=1)
+# User Registration
+if st.session_state.page == "register":
+    st.title("User Registration")
+    username = st.text_input("Username")
+    email = st.text_input("Email")
+    password = st.text_input("Password", type="password")
+    academic_level = st.selectbox("Academic Level", ["Undergraduate", "Graduate", "Postgraduate", "PhD", "Other"])
+    field_of_study = st.selectbox("Field of Study", ["Computer Science", "Engineering", "Medicine", "Business Administration", "Arts and Humanities", "Law", "Natural Sciences", "Other"])
+    interests = st.multiselect("Areas of Interest", ["Machine Learning & AI", "Statistics", "Programming & Development", "Computer Networks", "Research Methods", "Data Science", "Exam Preparation", "Other"])
+    goal = st.selectbox("Primary Goal", ["Improve academic performance", "Prepare for exams", "Enhance understanding of specific topics", "Research assistance", "Career preparation", "Other"])
+    programming_level = st.slider("Programming Skill (1: Beginner → 10: Expert)", 1, 10, 5)
+    math_level = st.slider("Math/Statistics Skill (1 → 10)", 1, 10, 5)
+    learning_style = st.radio("Preferred Learning Style", ["Visual (videos, images)", "Text-based (articles, books)", "Hands-on (projects, coding exercises)", "Mixed"])
+    feedback_frequency = st.radio("Feedback Frequency", ["Weekly progress reports", "Monthly updates", "No feedback needed"])
 
-# Step 2: Academic Level
-academic_level = st.selectbox("Academic Level", ["Undergraduate", "Graduate", "Postgraduate", "PhD", "Other"])
+    if st.button("Register"):
+        add_user(username, email, password, academic_level, field_of_study, interests, goal, programming_level, math_level, learning_style, feedback_frequency)
+        st.success("User registered successfully!")
+        st.session_state.page = "main"
 
-# Step 3: Field of Study
-field_of_study = st.selectbox("Field of Study", ["Computer Science", "Engineering", "Medicine", "Business Administration", 
-                                                 "Arts and Humanities", "Law", "Natural Sciences", "Other"])
-
-# Step 4: Areas of Interest
-interests = st.multiselect("Areas of Interest", ["Machine Learning & AI", "Statistics", "Programming & Development", 
-                                                 "Computer Networks", "Research Methods", "Data Science", 
-                                                 "Exam Preparation", "Other"])
-
-# Step 5: Goals
-goal = st.selectbox("Primary Goal", ["Improve academic performance", "Prepare for exams", 
-                                     "Enhance understanding of specific topics", "Research assistance", 
-                                     "Career preparation", "Other"])
-
-# Step 6: Skill Levels
-st.subheader("Skill Level (Optional)")
-programming_level = st.slider("Programming Skill (1: Beginner → 10: Expert)", 1, 10, 5)
-math_level = st.slider("Math/Statistics Skill (1 → 10)", 1, 10, 5)
-
-# Step 7: Learning Style
-learning_style = st.radio("Preferred Learning Style", ["Visual (videos, images)", 
-                                                       "Text-based (articles, books)", 
-                                                       "Hands-on (projects, coding exercises)", 
-                                                       "Mixed"])
-
-# Step 8: Feedback Frequency
-feedback_frequency = st.radio("Feedback Frequency", ["Weekly progress reports", "Monthly updates", "No feedback needed"])
-
-# Display profile summary
-if st.button("Save Profile"):
-    st.success("Profile Saved!")
-    st.write(f"**Name:** {name}")
-    st.write(f"**Age:** {age}")
-    st.write(f"**Academic Level:** {academic_level}")
-    st.write(f"**Field of Study:** {field_of_study}")
-    st.write(f"**Areas of Interest:** {', '.join(interests)}")
-    st.write(f"**Primary Goal:** {goal}")
-    st.write(f"**Programming Skill Level:** {programming_level}")
-    st.write(f"**Math Skill Level:** {math_level}")
-    st.write(f"**Preferred Learning Style:** {learning_style}")
-    st.write(f"**Feedback Frequency:** {feedback_frequency}")
+# User Login
+if st.session_state.page == "login":
+    st.title("User Login")
+    email = st.text_input("Email")
+    password = st.text_input("Password", type="password")
+    if st.button("Login"):
+        user = get_user(email)
+        if user and user[3] == password:  # Check password
+            st.success("Login successful!")
+            st.session_state.user = user
+            st.session_state.page = "main"
+        else:
+            st.error("Invalid email or password.")
 
 
 # Tabs for Input
