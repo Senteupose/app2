@@ -240,12 +240,15 @@ with tabs[2]:
             st.warning("Please upload a PDF.")
 
 # Feedback Collection
-st.sidebar.markdown("### Feedback")
-feedback = st.sidebar.text_input("Provide feedback on the hints/resources:")
-if st.sidebar.button("Submit Feedback"):
-    if feedback:
-        st.sidebar.success("Feedback submitted successfully!")
-        st.session_state.user_feedback.append(feedback)
-
+if st.session_state.page == "feedback":
+    st.title("Feedback")
+    feedback = st.text_area("Provide feedback on the hints/resources:")
+    if st.button("Submit Feedback"):
+        if feedback and "user" in st.session_state:
+            user_id = st.session_state.user[0]  # Get user ID from session
+            add_feedback(user_id, feedback)
+            st.success("Feedback submitted successfully!")
+        else:
+            st.error("Please log in to submit feedback.")
 # Footer
 st.markdown("<div class='footer'>© 2025 AI Study Assistant. Created by Abraham Pose Senteu</div>", unsafe_allow_html=True)
