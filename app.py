@@ -210,7 +210,7 @@ if st.session_state.page == "register":
     learning_style = st.radio("Preferred Learning Style", ["Visual (videos, images)", "Text-based (articles, books)", "Hands-on (projects, coding exercises)", "Mixed"])
     feedback_frequency = st.radio("Feedback Frequency", ["Weekly progress reports", "Monthly updates", "No feedback needed"])
 
-    if st.button("Register"):
+    if st.button("Register", key="register_button"):
         add_user(username, email, password, academic_level, field_of_study, interests, goal, programming_level, math_level, learning_style, feedback_frequency)
         st.success("User registered successfully!")
         st.session_state.page = "main"
@@ -220,7 +220,8 @@ if st.session_state.page == "login":
     st.title("User Login")
     email = st.text_input("Email")
     password = st.text_input("Password", type="password")
-    if st.button("Login"):
+    if st.button("Login", key="login_button"):
+    # Login logic
         user = get_user(email)
         if user and user[3] == password:  # Check password
             st.success("Login successful!")
@@ -285,7 +286,8 @@ with tabs[2]:
 if st.session_state.page == "feedback":
     st.title("Feedback")
     feedback = st.text_area("Provide feedback on the hints/resources:")
-    if st.button("Submit Feedback"):
+    if st.button("Submit Feedback", key="feedback_button"):
+    # Feedback logic
         if feedback and "user" in st.session_state:
             user_id = st.session_state.user[0]  # Get user ID from session
             add_feedback(user_id, feedback)
