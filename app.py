@@ -248,4 +248,4 @@ if st.sidebar.button("Submit Feedback"):
         st.session_state.user_feedback.append(feedback)
 
 # Footer
-st.markdown("<div class='footer'>© 2024 AI Study Assistant. Created by Abraham Pose Senteu</div>", unsafe_allow_html=True)
+st.markdown("<div class='footer'>© 2025 AI Study Assistant. Created by Abraham Pose Senteu</div>", unsafe_allow_html=True)
