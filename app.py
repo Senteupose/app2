@@ -11,13 +11,12 @@ import mysql.connector  # Add this import
 # Streamlit page configuration
 st.set_page_config(page_title="AI Smart Study Assistant", page_icon="📚", layout="wide")
 
-# Database connection and functions
 def connect_to_db():
     conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="9112@Pose",
-        database="ai_assistant"
+        host="localhost",  # Replace with your MySQL host
+        user="root",       # Replace with your MySQL username
+        password="9112@Pose",  # Replace with your MySQL password
+        database="ai_assistant"  # Replace with your database name
     )
     return conn
 
