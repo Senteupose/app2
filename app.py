@@ -6,8 +6,54 @@ from PIL import Image
 import io
 import fitz  # PyMuPDF
 import time
+import mysql.connector  # Add this import
+
+# Streamlit page configuration
 st.set_page_config(page_title="AI Smart Study Assistant", page_icon="📚", layout="wide")
 
+# Database connection and functions
+def connect_to_db():
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="9112@Pose",
+        database="ai_assistant"
+    )
+    return conn
+
+def add_user(username, email, password, academic_level, field_of_study, interests, goal, programming_level, math_level, learning_style, feedback_frequency):
+    conn = connect_to_db()
+    cursor = conn.cursor()
+    query = """
+    INSERT INTO users (username, email, password, academic_level, field_of_study, interests, goal, programming_level, math_level, learning_style, feedback_frequency)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    """
+    cursor.execute(query, (username, email, password, academic_level, field_of_study, ", ".join(interests), goal, programming_level, math_level, learning_style, feedback_frequency))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def get_user(email):
+    conn = connect_to_db()
+    cursor = conn.cursor()
+    query = "SELECT * FROM users WHERE email = %s"
+    cursor.execute(query, (email,))
+    user = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return user
+
+def add_feedback(user_id, feedback_text):
+    conn = connect_to_db()
+    cursor = conn.cursor()
+    query = "INSERT INTO feedback (user_id, feedback_text, feedback_date) VALUES (%s, %s, CURDATE())"
+    cursor.execute(query, (user_id, feedback_text))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+# Rest of your Streamlit app code...
+# (e.g., navigation, user input, AI integration, etc.)
 # Set the page state
 if "page" not in st.session_state:
     st.session_state.page = "main"
