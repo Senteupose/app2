@@ -290,8 +290,8 @@ if st.session_state.page == "login":
     
     # Login button logic
    if st.button("Login", key="login_button"):
-
-        # Login logic
+       
+# Login logic
         user = get_user(email)
         if user and user[3] == password:  # Check password (index 3 should correspond to password)
             st.success("Login successful!")
