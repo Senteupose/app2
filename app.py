@@ -246,7 +246,9 @@ if st.session_state.page == "register":
         st.session_state.registration_form["feedback_frequency"] = st.radio("Feedback Frequency", ["Weekly progress reports", "Monthly updates", "No feedback needed"], index=["Weekly progress reports", "Monthly updates", "No feedback needed"].index(st.session_state.registration_form["feedback_frequency"]) if st.session_state.registration_form["feedback_frequency"] else 0)
 
         # Submit button
-        if st.form_submit_button("Register"):
+        submit_button = st.form_submit_button("Register")
+        
+        if submit_button:
             # Add user to the database
             add_user(
                 st.session_state.registration_form["username"],
@@ -262,7 +264,7 @@ if st.session_state.page == "register":
                 st.session_state.registration_form["feedback_frequency"]
             )
             st.success("User registered successfully!")
-            st.session_state.page = "main"
+            st.session_state.page = "main"  # Redirect to main page
 
             # Clear the registration form data after successful registration
             st.session_state.registration_form = {
@@ -279,20 +281,6 @@ if st.session_state.page == "register":
                 "feedback_frequency": ""
             }
 
-        # Clear the registration form data after successful registration
-        st.session_state.registration_form = {
-            "username": "",
-            "email": "",
-            "password": "",
-            "academic_level": "",
-            "field_of_study": "",
-            "interests": [],
-            "goal": "",
-            "programming_level": 5,
-            "math_level": 5,
-            "learning_style": "",
-            "feedback_frequency": ""
-        }
 
 # User Login
 if st.session_state.page == "login":
