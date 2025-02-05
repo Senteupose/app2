@@ -5,4 +5,5 @@ pytesseract
 requests
 PyMuPDF
 speechrecognition
+mysql-connector-python
 
