@@ -287,13 +287,15 @@ if st.session_state.page == "login":
     st.title("User Login")
     email = st.text_input("Email")
     password = st.text_input("Password", type="password")
-    if st.button("Login", key="login_button"):
-    # Login logic
+    
+    # Login button logic
+    if st.button("Login"):
+        # Login logic
         user = get_user(email)
-        if user and user[3] == password:  # Check password
+        if user and user[3] == password:  # Check password (index 3 should correspond to password)
             st.success("Login successful!")
-            st.session_state.user = user
-            st.session_state.page = "main"
+            st.session_state.user = user  # Store user info in session state
+            st.session_state.page = "main"  # Redirect to main page
         else:
             st.error("Invalid email or password.")
 
